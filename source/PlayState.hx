@@ -2,16 +2,17 @@ package;
 
 import flixel.FlxSprite;
 import flixel.FlxState;
+import hero.Hero;
 
 class PlayState extends FlxState
 {
-	var hero:FlxSprite;
+	var hero:Hero;
 
 	override public function create()
 	{
 		super.create();
 
-		hero = new FlxSprite(300, 300);
+		hero = new Hero(300, 300);
 		add(hero);
 	}
 
