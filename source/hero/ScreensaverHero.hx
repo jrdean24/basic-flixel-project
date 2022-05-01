@@ -12,7 +12,7 @@ class ScreensaverHero extends FlxSprite
 	var randomXSpeed:Float = 0;
 	var randomYSpeed:Float = 0;
 
-	public function new()
+	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
 		makeGraphic(25, 25, FlxColor.WHITE, false, "ScreenSaverHero");
