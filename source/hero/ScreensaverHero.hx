@@ -1,4 +1,4 @@
-package;
+package hero;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
