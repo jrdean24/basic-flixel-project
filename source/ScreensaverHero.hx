@@ -1,38 +1,83 @@
 package;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
 
 class ScreensaverHero extends FlxSprite
 {
-	static inline var SPEED:Float = 200;
+	static inline var MIN_SPEED:Float = -200;
+	static inline var MAX_SPEED:Float = 200;
+
+	var randomXSpeed:Float = 0;
+	var randomYSpeed:Float = 0;
 
 	public function new()
 	{
 		super(x, y);
-		makeGraphic(25, 25, FlxColor.BLUE, false, "ScreenSaverHero");
-		drag.x = drag.y = 1600;
+		makeGraphic(25, 25, FlxColor.WHITE, false, "ScreenSaverHero");
+		randomizeMovement();
+	}
+
+	private function randomizeMovement()
+	{
+		randomXSpeed = FlxG.random.float(MIN_SPEED, MAX_SPEED);
+		randomYSpeed = FlxG.random.float(MIN_SPEED, MAX_SPEED);
+		velocity.set(randomXSpeed, randomYSpeed);
+	}
+
+	private function bounceOffWalls()
+	{
+		if (x < 0)
+		{
+			velocity.x = velocity.x * -1;
+		}
+
+		if (x > FlxG.width - width)
+		{
+			velocity.x = velocity.x * -1;
+		}
+
+		if (y < 0)
+		{
+			velocity.y = velocity.y * -1;
+		}
+
+		if (y > FlxG.height - height)
+		{
+			velocity.y = velocity.y * -1;
+		}
 	}
 
 	override public function update(elapsed:Float)
 	{
-		if (this.x > 250 && this.y > 250)
+		if (x <= (FlxG.width / 2) && y <= (FlxG.height / 2))
 		{
-			this.color = FlxColor.GREEN;
+			color = FlxColor.BLUE;
 		}
-		else if (this.x > 250 && this.y < 250)
+
+		if (x <= (FlxG.width / 2) && y >= (FlxG.height / 2))
 		{
-			this.color = 0xFFFF0000;
+			color = FlxColor.RED;
 		}
-		else if (this.x < 250 && this.y < 250)
+
+		if (x >= (FlxG.width / 2) && y >= (FlxG.height / 2))
 		{
-			velocity.set(SPEED, 0);
-			// this.color = FlxColor.YELLOW;
+			color = FlxColor.GREEN;
 		}
-		else if (this.x < 250 && this.y > 250)
+
+		if (x >= (FlxG.width / 2) && y <= (FlxG.height / 2))
 		{
-			this.color = FlxColor.BLUE;
+			color = FlxColor.YELLOW;
 		}
+
+		// if you Press and release Space key, it re-randomizes movement
+		if (FlxG.keys.justReleased.SPACE)
+		{
+			randomizeMovement();
+		}
+
+		bounceOffWalls();
 
 		super.update(elapsed);
 	}

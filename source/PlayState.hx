@@ -17,8 +17,10 @@ class PlayState extends FlxState
 		var hero = new Hero(300, 300);
 		add(hero);
 
-		var screensaverHero1 = new ScreensaverHero();
-		add(screensaverHero1);
+		for (i in 0...100)
+		{
+			add(new ScreensaverHero());
+		}
 
 		var text = new flixel.text.FlxText(75, 200, 0, " Hello World", 64);
 		text.setFormat(null, 64, 0x770088, CENTER, OUTLINE, 0xFF00FF00, true);
