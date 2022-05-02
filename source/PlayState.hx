@@ -16,6 +16,7 @@ class PlayState extends FlxState
 	var walls:FlxTypedGroup<Wall>;
 	var screensaverHeroes:FlxTypedGroup<ScreensaverHero>;
 	var totalScore:Int = 0;
+	var score:FlxText;
 
 	override public function create()
 	{
@@ -28,7 +29,7 @@ class PlayState extends FlxState
 		}
 		add(screensaverHeroes);
 
-		var controllableHero = new ControllableHero();
+		controllableHero = new ControllableHero();
 		add(controllableHero);
 
 		walls = new FlxTypedGroup<Wall>();
@@ -43,20 +44,22 @@ class PlayState extends FlxState
 		text.setFormat(null, 64, 0x770088, CENTER, OUTLINE, 0xFF00FF00, true);
 		text.borderSize = 5;
 		add(text);
+
+		score = new flixel.text.FlxText(0, 0, 0, "Score: " + totalScore, 12, true);
+		add(score);
 	}
 
 	private function AddScore(obj1:flixel.FlxBasic, obj2:flixel.FlxBasic)
 	{
 		obj1.kill();
 		totalScore += 1;
-		var score = new flixel.text.FlxText(0, 0, 0, "Score: " + totalScore, 12, true);
+		score.text = "Score: " + totalScore;
 		add(score);
 	}
 
 	override public function update(elapsed:Float)
 	{
-		// FlxG.overlap(screensaverHeroes, controllableHero, AddScore(screensaverHeroes, controllableHero));
-		// couldnt figure out how to make this part work. ^
+		FlxG.overlap(screensaverHeroes, controllableHero, AddScore);
 		FlxG.collide(controllableHero, walls);
 
 		super.update(elapsed);
